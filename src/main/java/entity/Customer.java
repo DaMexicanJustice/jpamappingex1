@@ -20,6 +20,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -32,8 +34,11 @@ public class Customer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String firstname;
-    private String lastname;
+    private String FIRSTNAME;
+    private String LASTNAME;
+
+    @OneToMany
+    private List<Address> addresses = new ArrayList();
     
     @ElementCollection()
     private List<String> hobbies = new ArrayList();
@@ -42,6 +47,35 @@ public class Customer implements Serializable {
     @MapKeyColumn(name = "PHONE")
     @Column(name="Description")
     private Map<String,String> phones = new HashMap();
+    
+    public Customer() {
+        
+    }
+    
+    public void addAddress(Address a) {
+        addresses.add(a);
+    }
+    
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public String getFIRSTNAME() {
+        return FIRSTNAME;
+    }
+
+    public void setFIRSTNAME(String FIRSTNAME) {
+        this.FIRSTNAME = FIRSTNAME;
+    }
+
+    public String getLASTNAME() {
+        return LASTNAME;
+    }
+
+    public void setLASTNAME(String LASTNAME) {
+        this.LASTNAME = LASTNAME;
+    }
+    
     
     public enum CustomerType {
         GOLD,
